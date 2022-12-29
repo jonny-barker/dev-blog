@@ -6,11 +6,11 @@ export const NewPost = () => {
             <form>
                 <label htmlFor="title">title</label>
                 <input type="text" />
-                <label htmlFor="title">title</label>
+                <label htmlFor="title">sub-title</label>
                 <input type="text" />
-                <label htmlFor="title">title</label>
+                <label htmlFor="title">body</label>
                 <input type="text" />
-                <label htmlFor="title">title</label>
+                <label htmlFor="title">tags</label>
                 <input type="text" />
             </form>
         </div>
