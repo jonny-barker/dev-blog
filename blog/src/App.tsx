@@ -26,7 +26,7 @@ function App() {
       </Routes>
       </main>
       <footer>
-        <h3>j_d_barker@hotmail.co.uk</h3>
+        <h3>developed by jonny barker</h3>
       </footer>
     </div>
   );

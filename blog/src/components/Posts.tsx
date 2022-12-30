@@ -1,19 +1,35 @@
-import { Link } from "react-router-dom";
-import '../styling/global.css'
+import "../styling/global.css";
+import { db } from "../firebase/firebase-config";
+import { getDocs, collection } from "firebase/firestore";
+import { useEffect, useState } from "react";
+
 export const Posts = () => {
-  const posts = JSON.parse(localStorage.getItem("posts") || "[]");
+  const [posts, setPosts] = useState<any>([]);
+
+  useEffect(() => {
+    const docRef = collection(db, "posts");
+    getDocs(docRef).then((res) => {
+      const newPosts = res.docs;
+      console.log(newPosts)
+      setPosts(newPosts);
+    });
+  },[]);
+
+
+
   return (
     <div id="posts">
-     
       {posts.map((post: any) => {
-        return (
-          <div id={post.id} className='post'>
-            <h4>{post.id}</h4>
-            <h2>{post.title}</h2>
-            <h4>{post.subTitle}</h4>
-            <p>{post.body}</p>
-          </div>
-        );
+
+        const item = post._document.data.value.mapValue.field
+        // return (
+        //   <div id={item.id} className="post">
+        //     <h4>{item.id}</h4>
+        //     <h2>{item.title}</h2>
+        //     <h4 className="sub-title">{item.subTitle}</h4>
+        //     <p>{item.body}</p>
+        //   </div>
+        // );
       })}
     </div>
   );
