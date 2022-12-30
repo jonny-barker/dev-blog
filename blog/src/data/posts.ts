@@ -1,4 +1,4 @@
-export const entries = [
+export const posts = [
   {
     id: 1672310997156,
     title: "blog 1",
