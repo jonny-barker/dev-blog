@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { form } from "../types";
 import { addDoc, collection } from "firebase/firestore";
-import { db } from "../firebase-config";
+import { db } from "../firebase/firebase-config";
 
 export const NewPost = () => {
   const [form, setForm] = useState<form>({
