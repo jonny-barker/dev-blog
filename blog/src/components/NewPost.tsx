@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { form } from "../types";
-import { addDoc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../firebase-config";
 
 export const NewPost = () => {
   const [form, setForm] = useState<form>({
@@ -9,20 +10,18 @@ export const NewPost = () => {
     subTitle: "",
     body: "",
   });
-  const oldPosts = JSON.parse(localStorage.getItem("posts") || "[]");
-  const posts: Array<form> = [...oldPosts];
+
   const handleChange = (event: ChangeEvent, id: string) => {
     const newInput: form = { ...form };
     newInput[id] = (event.target as HTMLInputElement).value;
     newInput.id = Date.now();
     setForm(newInput);
   };
+  const postCollectionsRef = collection(db, "posts");
 
   const handleSubmit = (event: FormEvent) => {
-    // localStorage.clear() 
     event.preventDefault();
-    posts.push(form);
-    localStorage.setItem("posts", JSON.stringify(posts));
+    addDoc(postCollectionsRef, form)
     setForm({ id: Date.now(), title: "", subTitle: "", body: "" });
   };
 
