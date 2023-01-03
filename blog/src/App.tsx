@@ -11,22 +11,31 @@ function App() {
     <div className="App">
       <main>
         <nav>
-        <Link to={"/"}>
-          <h1>dev-blog</h1>
-        </Link>
-        <Link to={"/new-post"}>
-          <button className="new-post">+</button>
-        </Link>
-        <Login isAuth={isAuth} setIsAuth={setIsAuth} />
-      </nav>
+          <Link to={"/"}>
+            <h1>dev-blog</h1>
+          </Link>
+          <Link to={"/new-post"}>
+            <button className="new-post">+</button>
+          </Link>
+          <Login isAuth={isAuth} setIsAuth={setIsAuth} />
+        </nav>
 
-      <Routes>
-        <Route path="/" element={<Posts />} />
-        <Route path="/new-post" element={<NewPost />} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Posts />} />
+          <Route path="/new-post" element={<NewPost />} />
+        </Routes>
       </main>
       <footer>
-        <h3>developed by jonny barker</h3>
+        <h3>
+          developed by{" "}
+          <a
+            href="https://github.com/jonny-barker"
+            target="_blank"
+            rel="noreferrer"
+          >
+            jonny barker
+          </a>
+        </h3>
       </footer>
     </div>
   );
