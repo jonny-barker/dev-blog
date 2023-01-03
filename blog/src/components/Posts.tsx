@@ -12,11 +12,11 @@ export const Posts = () => {
       try {
         const docRef = collection(db, "posts");
         const response = await getDocs(docRef);
-        //console.log("response", response);
-        let data = { title: "not found" };
-        console.log(response, 'response')
+        let data: any = [];
         if (response) {
-          data = response.docs;
+          response.forEach((doc) => {
+            data.push(doc.data());
+          });
         }
         setPosts(data);
         setLoading(false);
@@ -27,21 +27,22 @@ export const Posts = () => {
     fetchData();
   }, []);
 
+  
+  console.log(posts);
   return loading ? (
     <p>Loading...</p>
   ) : (
-    <p>loaded</p>
-    // <div id="posts">
-    //   {posts.map((post: any) => {
-    //     const item = post._document.data.value.mapValue.fields;
-    //     return (
-    //       <div key={item.id.integerValue}>
-    //         <h2>{item.title.stringValue}</h2>
-    //         <h3>{item.subTitle.stringValue}</h3>
-    //         <p>{item.body.stringValue}</p>
-    //       </div>
-    //     );
-    //   })}
-    // </div>
+    <div id="posts">
+      {posts.map((post: any) => {
+        return (
+          <div key={post.id}>
+            <h4 className="id">{post.id}</h4>
+            <h2 className="title">{post.title}</h2>
+            <h3 className="sub-title">{post.subTitle}</h3>
+            <p className="body">{post.body}</p>
+          </div>
+        );
+      })}
+    </div>
   );
 };
