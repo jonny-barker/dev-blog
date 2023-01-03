@@ -20,7 +20,7 @@ export const Login = ({ setIsAuth }: isAuth) => {
         signIn();
       }} className='sign-in-button'
     >
-      Sign in
+      sign in
     </button>
   );
 };
