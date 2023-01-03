@@ -5,31 +5,28 @@ import { useEffect, useState } from "react";
 
 export const Posts = () => {
   const [posts, setPosts] = useState<any>([]);
+  let count = 0;
 
   useEffect(() => {
     const docRef = collection(db, "posts");
-    getDocs(docRef).then((res) => {
-      const newPosts = res.docs;
-      console.log(newPosts)
-      setPosts(newPosts);
-    });
-  },[]);
-
-
+    if (count < 2) {
+      getDocs(docRef).then((res) => {
+        count++;
+        const newPosts = res.docs;
+        setPosts(newPosts);
+      });
+    }
+  }, [count]);
 
   return (
     <div id="posts">
       {posts.map((post: any) => {
-
-        const item = post._document.data.value.mapValue.field
-        // return (
-        //   <div id={item.id} className="post">
-        //     <h4>{item.id}</h4>
-        //     <h2>{item.title}</h2>
-        //     <h4 className="sub-title">{item.subTitle}</h4>
-        //     <p>{item.body}</p>
-        //   </div>
-        // );
+        const item = post._document.data.value.mapValue.fields;
+        return <div key={item.id.integerValue}>
+            <h2>{item.title.stringValue}</h2>
+            <h3>{item.subTitle.stringValue}</h3>
+            <p>{item.body.stringValue}</p>
+        </div>
       })}
     </div>
   );
