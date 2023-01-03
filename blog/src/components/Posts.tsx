@@ -5,29 +5,43 @@ import { useEffect, useState } from "react";
 
 export const Posts = () => {
   const [posts, setPosts] = useState<any>([]);
-  let count = 0;
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const docRef = collection(db, "posts");
-    if (count < 2) {
-      getDocs(docRef).then((res) => {
-        count++;
-        const newPosts = res.docs;
-        setPosts(newPosts);
-      });
-    }
-  }, [count]);
+    const fetchData = async () => {
+      try {
+        const docRef = collection(db, "posts");
+        const response = await getDocs(docRef);
+        //console.log("response", response);
+        let data = { title: "not found" };
+        console.log(response, 'response')
+        if (response) {
+          data = response.docs;
+        }
+        setPosts(data);
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchData();
+  }, []);
 
-  return (
-    <div id="posts">
-      {posts.map((post: any) => {
-        const item = post._document.data.value.mapValue.fields;
-        return <div key={item.id.integerValue}>
-            <h2>{item.title.stringValue}</h2>
-            <h3>{item.subTitle.stringValue}</h3>
-            <p>{item.body.stringValue}</p>
-        </div>
-      })}
-    </div>
+  return loading ? (
+    <p>Loading...</p>
+  ) : (
+    <p>loaded</p>
+    // <div id="posts">
+    //   {posts.map((post: any) => {
+    //     const item = post._document.data.value.mapValue.fields;
+    //     return (
+    //       <div key={item.id.integerValue}>
+    //         <h2>{item.title.stringValue}</h2>
+    //         <h3>{item.subTitle.stringValue}</h3>
+    //         <p>{item.body.stringValue}</p>
+    //       </div>
+    //     );
+    //   })}
+    // </div>
   );
 };
