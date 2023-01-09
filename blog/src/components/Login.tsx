@@ -1,6 +1,6 @@
 import "../styling/global.css";
 import { auth, provider } from "../firebase/firebase-config";
-import { signInWithPopup } from "firebase/auth";
+import { signInWithRedirect } from "firebase/auth";
 interface isAuth {
   isAuth: boolean;
   setIsAuth: Function;
@@ -8,7 +8,7 @@ interface isAuth {
 
 export const Login = ({ setIsAuth }: isAuth) => {
   const signIn = () => {
-    signInWithPopup(auth, provider).then((result) => {
+    signInWithRedirect(auth, provider).then((result) => {
       setIsAuth(true);
     });
   };
